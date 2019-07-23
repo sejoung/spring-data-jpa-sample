@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-
-	List<Reservation> findAllByReservationEndTimeBeforeAndReservationStartTimeAfter(
-			LocalDateTime startTime, LocalDateTime endTime);
+	List<Reservation> findAllByReservationEndTimeBeforeAndMeetingRoomId(LocalDateTime startTime, Long meetingRoomId);
 }
