@@ -1,7 +1,10 @@
 package com.github.sejoung.domain;
 
-import javax.persistence.EmbeddedId;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,15 +22,27 @@ import lombok.ToString;
 public class Reservation extends AbstractTimeEntity {
 
 	@Id
-	@EmbeddedId
-	private ReservationKey key;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column
+	private LocalDateTime reservationStartTime;
+
+	@Column
+	private LocalDateTime reservationEndTime;
+
+	@OneToOne
+	private MeetingRoom meetingRoom;
 
 	@OneToOne
 	private User user;
 
 	@Builder
-	private Reservation(ReservationKey key, User user) {
-		this.key = key;
+	private Reservation(MeetingRoom meetingRoom, LocalDateTime reservationStartTime,
+			LocalDateTime reservationEndTime, User user) {
+		this.meetingRoom = meetingRoom;
+		this.reservationStartTime = reservationStartTime;
+		this.reservationEndTime = reservationEndTime;
 		this.user = user;
 	}
 }
