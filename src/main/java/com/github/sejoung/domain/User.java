@@ -24,6 +24,7 @@ public class User extends AbstractTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="USER_ID")
 	private Long id;
 
 	@Column

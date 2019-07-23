@@ -19,11 +19,12 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "TB_MEETINGROOM")
+@Table(name = "TB_MEETING_ROOM")
 public class MeetingRoom extends AbstractTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="MEETING_ROOM_ID")
 	private Long id;
 
 	@Column

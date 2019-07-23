@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,7 +22,14 @@ public class Reservation extends AbstractTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "RESERVATION_ID")
 	private Long id;
+
+	@Column(name = "MEETING_ROOM_ID")
+	private Long meetingRoomId;
+
+	@Column(name = "USER_ID")
+	private Long userId;
 
 	@Column
 	private LocalDateTime reservationStartTime;
@@ -31,18 +37,12 @@ public class Reservation extends AbstractTimeEntity {
 	@Column
 	private LocalDateTime reservationEndTime;
 
-	@OneToOne
-	private MeetingRoom meetingRoom;
-
-	@OneToOne
-	private User user;
-
 	@Builder
-	private Reservation(MeetingRoom meetingRoom, LocalDateTime reservationStartTime,
-			LocalDateTime reservationEndTime, User user) {
-		this.meetingRoom = meetingRoom;
+	private Reservation(Long meetingRoomId, Long userId, LocalDateTime reservationStartTime,
+			LocalDateTime reservationEndTime) {
+		this.meetingRoomId = meetingRoomId;
+		this.userId = userId;
 		this.reservationStartTime = reservationStartTime;
 		this.reservationEndTime = reservationEndTime;
-		this.user = user;
 	}
 }
