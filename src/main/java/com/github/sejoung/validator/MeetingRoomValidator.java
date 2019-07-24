@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class MeetingRoomValidator {
+
 	private final MeetingRoomRepository meetingRoomRepository;
 
 	public void validate(Long meetingRoomId) {

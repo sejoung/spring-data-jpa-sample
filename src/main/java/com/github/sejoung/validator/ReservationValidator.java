@@ -27,11 +27,8 @@ public class ReservationValidator {
     protected void timeValidate(Reservation reservation) {
 
         reservationRepository.findAll().forEach(reservationObj -> {
-            if (reservationObj.getMeetingRoomId() == reservation.getMeetingRoomId() &&
-                    reservationObj.getReservationStartTime().isAfter(reservation.getReservationStartTime())
-                    && reservationObj.getReservationEndTime().isBefore(reservation.getReservationStartTime())) {
+            if (reservationObj.equals(reservation)) {
                 throw new ReservationException("예약된 시간이 존재 합니다.");
-
             }
 
         });

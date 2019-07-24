@@ -1,5 +1,6 @@
 package com.github.sejoung.domain;
 
+import com.github.sejoung.validator.ReservationValidator;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
@@ -44,5 +47,25 @@ public class Reservation extends AbstractTimeEntity {
 		this.userId = userId;
 		this.reservationStartTime = reservationStartTime;
 		this.reservationEndTime = reservationEndTime;
+	}
+
+	public void booking(ReservationValidator validator) {
+		validator.validate(this);
+	}
+
+
+	public boolean equals(Reservation reservation) {
+		boolean isEquals = false;
+		log.debug("this = {}", this);
+		log.debug("reservation = {}", reservation);
+
+		if (this.meetingRoomId == reservation.getMeetingRoomId() && this.reservationEndTime
+				.isAfter(reservation.getReservationStartTime()) && (
+				this.reservationStartTime.isBefore(reservation.getReservationStartTime())
+						|| this.reservationStartTime.isEqual(reservation.getReservationStartTime()))) {
+			isEquals = true;
+		}
+
+		return isEquals;
 	}
 }
